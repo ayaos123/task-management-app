@@ -27,13 +27,6 @@ Table of contents
 
 ---
 
-## Demo
-Add screenshots or a link to a live demo here.
-
-![screenshot](./frontend/public/screenshot.png) <!-- Replace with an actual screenshot -->
-
----
-
 ## Features
 
 - User registration & login (Laravel Sanctum)
@@ -303,4 +296,3 @@ If you'd like, I can:
 - Improve the repo root README with screenshots/animated GIFs and more polished badges
 
 Tell me which of the above you'd like me to do next.
-
