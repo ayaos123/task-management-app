@@ -72,3 +72,77 @@ A modern, full-stack Task Management application built with Laravel API backend 
    ```bash
    git clone https://github.com/ayaos123/task-management-app.git
    cd task-management-app
+# Task Management App
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](#docker)
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?logo=laravel&logoColor=white)](#tech-stack)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](#tech-stack)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](#tech-stack)
+
+A modern, full-stack Task Management application built with Laravel API backend and React + TypeScript frontend. Features JWT authentication, task CRUD operations, and a responsive UI.
+
+![Task Management App Preview](https://via.placeholder.com/800x400.png?text=Task+Management+App+Screenshot)
+
+## ✨ Features
+
+### 🔐 Authentication & Security
+- User registration & login with JWT tokens
+- Laravel Sanctum for API authentication
+- Protected routes and API endpoints
+- Secure password hashing
+
+### 📝 Task Management
+- Create, Read, Update, Delete tasks
+- Task status tracking: `pending`, `in_progress`, `done`
+- User-scoped tasks (users only see their own tasks)
+- Paginated task list (10 tasks per page)
+- Search and filter functionality
+
+### 🎨 Frontend
+- Modern React 18 with TypeScript
+- Vite for fast development and building
+- Tailwind CSS for responsive design
+- Hot reload for rapid development
+- Clean, intuitive user interface
+
+### 🐳 Development & Deployment
+- Docker Compose setup for easy local development
+- SQLite for development, MySQL for production
+- Environment-based configuration
+- Comprehensive API documentation
+
+## 🛠 Tech Stack
+
+### Backend
+- **Laravel 10.x** - PHP framework
+- **Laravel Sanctum** - API authentication
+- **SQLite** - Development database
+- **MySQL** - Production database (optional)
+
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Axios** - HTTP client
+- **React Router** - Navigation
+- **React Hot Toast** - Notifications
+
+### DevOps & Tools
+- **Docker & Docker Compose** - Containerization
+- **Git** - Version control
+- **Postman/Insomnia** - API testing
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Docker & Docker Compose (recommended)
+- *OR* PHP 8.1+, Composer, Node.js 18+, npm
+
+### Using Docker (Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ayaos123/task-management-app.git
+   cd task-management-app
