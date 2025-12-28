@@ -1,371 +1,263 @@
-# Task Management App
+# 📝 Task Management Application
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](#docker)
-[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?logo=laravel&logoColor=white)](#tech-stack)
-[![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black)](#tech-stack)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](#tech-stack)
-
-A modern full‑stack Task Management application: Laravel API backend and React + TypeScript frontend. Includes authentication, task CRUD, pagination, search/filter and a responsive UI.
-
-![Task Management App Preview](https://via.placeholder.com/800x400.png?text=Task+Management+App+Screenshot)
+A powerful Full-Stack Task Management Application built with Laravel (Backend) and React + TypeScript (Frontend).
+Supports secure authentication, full CRUD operations, protected routes, and a beautifully responsive UI.
 
 ---
 
-Table of Contents
-- [About](#about)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#architecture)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Using Docker (recommended)](#using-docker-recommended)
-  - [Manual / Local Setup](#manual--local-setup)
-- [Environment](#environment)
-  - [Backend (.env) example](#backend-env-example)
-  - [Frontend (.env) example](#frontend-env-example)
-- [Database & Seeding](#database--seeding)
-- [API Reference (common endpoints)](#api-reference-common-endpoints)
-- [Frontend routes & behavior](#frontend-routes--behavior)
-- [Testing](#testing)
-- [Production / Deployment](#production--deployment)
-- [Troubleshooting & Tips](#troubleshooting--tips)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
-- [Contact](#contact)
+## 📑 Table of Contents
+- Overview
+- Features
+- Tech Stack
+- Quick Start with Docker
+- Manual Installation
+- API Endpoints
+- Frontend Features
+- Docker Configuration
+- Environment Variables
+- Testing
+- Project Structure
+- Security
+- Responsive Design
+- Error Handling
+- Database Schema
+- Development Workflow
+- Troubleshooting
+- Notes
 
-## About
-This repository contains a Task Management application designed for learning and rapid prototypes. It separates concerns with a Laravel API (backend) and a React + TypeScript SPA (frontend). The API exposes endpoints for authentication and task management; the frontend is a Vite app that consumes the API.
+---
+
+## 📋 Overview
+A full-stack Task Management System featuring:
+- Secure authentication
+- User-based task isolation
+- CRUD task management
+- Pagination, validation, and error handling
+- Simple deployment via Docker
+
+---
 
 ## ✨ Features
-- User registration & login (token-based authentication)
-- Protected API endpoints (Laravel Sanctum / token-based)
-- Task CRUD: create, read, update, delete
-- Task statuses: `pending`, `in_progress`, `done`
-- Each user manages their own tasks
-- Paginated task listing with search & filter
-- Responsive UI built with Tailwind CSS
-- Docker Compose for local development
-- Environment-aware configuration (SQLite for dev, MySQL for prod)
-- Basic API documentation and examples
 
-## 🛠 Tech Stack
+### ✅ Backend (Laravel)
+- Email & password authentication
+- Laravel Sanctum (JWT-based authentication)
+- Full CRUD for tasks
+- Task status workflow
+- User-specific task access
+- RESTful API architecture
+- Strong validation & structured responses
+
+### ✅ Frontend (React + Vite + TypeScript)
+- Login / Register pages
+- Protected routes
+- Task listing with pagination
+- Create / Edit / Delete / Update status
+- Tailwind CSS responsive UI
+- Toast notifications
+- Loading & error states handling
+
+### 🎁 Bonus
+- Full Docker support
+- SQLite for development / MySQL for production
+- Clean UI & maintainable codebase
+
+---
+
+## 🛠️ Tech Stack
+
 ### Backend
-- Laravel 10.x
-- Laravel Sanctum (API authentication)
+- Laravel 10
 - PHP 8.1+
-- SQLite (development) / MySQL (production)
-- Composer
+- Laravel Sanctum
+- SQLite / MySQL
 
 ### Frontend
 - React 18
-- TypeScript 5.x
+- TypeScript
 - Vite
 - Tailwind CSS
+- React Router DOM
 - Axios
-- React Router
-- React Hot Toast (notifications)
-
-### DevOps & Tools
-- Docker & Docker Compose
-- Git
-- Postman / Insomnia (suggested for API testing)
-
-## Architecture
-- Backend: RESTful API serving JSON, authenticates requests and scopes tasks to users.
-- Frontend: Single Page App (Vite) that talks to the API using Axios, stores tokens (cookies or localStorage depending on setup), and provides UI for task management.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start with Docker
 
-### Prerequisites
-- Docker & Docker Compose (recommended)
-- OR:
-  - PHP 8.1+
-  - Composer
-  - Node.js 18+
-  - npm / pnpm / yarn
-  - A database (SQLite/MySQL)
-
-Clone the repo:
-```bash
-git clone https://github.com/ayaos123/task-management-app.git
+### 1️⃣ Clone & Setup
+git clone <your-repo-url>
 cd task-management-app
-```
 
-### Using Docker (Recommended)
-A Docker Compose setup is provided for easy local development.
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
 
-1. Copy example env files (if included) or create minimal .env files for both backend and frontend:
-   - backend: `./backend/.env` (or root .env if monorepo)
-   - frontend: `./frontend/.env`
+### 2️⃣ Start Services
+docker-compose up -d
+docker-compose exec backend composer install
+docker-compose exec backend php artisan key:generate
+docker-compose exec backend php artisan migrate
 
-2. Start services:
-```bash
-# Use docker compose v2 syntax
-docker compose up -d --build
-```
+### 3️⃣ Access the App
+- Frontend → http://localhost:5173
+- Backend API → http://localhost:8000
 
-3. Run migrations & seeders (run artisan inside the app container):
-```bash
-# If the service in docker-compose is named `app` or `backend`:
-docker compose exec app php artisan migrate --seed --force
-# or
-docker compose exec backend php artisan migrate --seed --force
-```
-
-4. (Optional) Create a default user via seeder or tinker:
-```bash
-docker compose exec app php artisan db:seed --class=UserSeeder
-```
-
-5. Open the frontend (if served by Vite in container) — typical URL:
-http://localhost:5173
-Or use the host/ports configured in docker-compose.
-
-Notes:
-- Service names depend on the included docker-compose file. Replace `app`/`backend` with the correct service name in your compose file.
-
-### Manual / Local Setup (no Docker)
-
-Backend:
-```bash
-# in backend folder
-cp .env.example .env
-composer install
-php artisan key:generate
-# Configure DB in .env (use sqlite for quick start)
-touch database/database.sqlite
-# .env
-# DB_CONNECTION=sqlite
-# DB_DATABASE=/absolute/path/to/database/database.sqlite
-
-php artisan migrate --seed
-php artisan serve --host=0.0.0.0 --port=8000
-```
-
-Frontend:
-```bash
-# in frontend folder
-cp .env.example .env
-npm install
-# set VITE_API_URL in .env to http://localhost:8000 (or your API URL)
-npm run dev
-# build for production
-npm run build
-```
+### 4️⃣ Stop Containers
+docker-compose down
 
 ---
 
-## Environment
+## ⚙️ Manual Installation
 
-### Backend (.env) example
-Below are the common vars you should configure in the backend `.env`:
+### Backend Setup
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite
+php artisan migrate
+php artisan serve --port=8000
 
-```
-APP_NAME="Task Management"
-APP_ENV=local
-APP_KEY=base64:GENERATED_BY_ARTISAN
+### Frontend Setup
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+
+---
+
+## 📡 API Endpoints
+
+### 🔐 Authentication
+Method | Endpoint | Description
+-------|----------|------------
+POST   | /api/register | Register
+POST   | /api/login    | Login
+POST   | /api/logout   | Logout
+GET    | /api/user     | Authenticated user
+
+### ✅ Tasks (Protected)
+Method | Endpoint | Description
+-------|----------|------------
+GET    | /api/tasks       | Get tasks
+POST   | /api/tasks       | Create task
+PUT    | /api/tasks/{id}  | Update task
+DELETE | /api/tasks/{id}  | Delete task
+
+### 📌 Example – Register
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+
+### 📌 Example – Create Task
+{
+  "title": "Complete project",
+  "description": "Finish the task management app",
+  "status": "pending"
+}
+
+---
+
+## 🎨 Frontend Features
+- Components: TaskList, TaskForm, TaskItem, ProtectedRoute
+- Context API for authentication
+- Local + API state management
+
+---
+
+## 🐳 Docker Configuration
+- backend → Laravel + PHP 8
+- frontend → React + Node
+- database → SQLite / MySQL
+- Hot reload and persistent volumes
+
+---
+
+## 🔧 Environment Variables
+
+### Backend `.env`
 APP_URL=http://localhost:8000
-
 DB_CONNECTION=sqlite
-DB_DATABASE=/absolute/path/to/database/database.sqlite
-# or for mysql:
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=task_app
-# DB_USERNAME=root
-# DB_PASSWORD=secret
-
 SANCTUM_STATEFUL_DOMAINS=localhost:5173
 SESSION_DOMAIN=localhost
-API_RATE_LIMIT=60
 
-# If using JWT (optional)
-# JWT_SECRET=your_jwt_secret_here
-```
-
-Remember to run:
-```bash
-php artisan key:generate
-```
-
-### Frontend (.env) example
-For Vite, create `frontend/.env` or `.env.local`:
-
-```
-VITE_API_URL=http://localhost:8000
-VITE_APP_NAME="Task Management"
-```
-
-The frontend uses VITE_API_URL to call the backend.
+### Frontend `.env`
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_NAME="Task Manager"
 
 ---
 
-## Database & Seeding
-- Migrations define `users` and `tasks` tables.
-- Seeder(s) create demo users and sample tasks for development.
-
-Commands:
-```bash
-# run migrations
-php artisan migrate
-
-# seed the database
-php artisan db:seed
-
-# rollback & migrate fresh
-php artisan migrate:fresh --seed
-```
-
-If using Docker, run these commands inside the PHP/Laravel container (see Docker section).
+## 🧪 Testing
+docker-compose exec backend php artisan test
+cd backend && php artisan test
 
 ---
 
-## API Reference (common endpoints)
-Base URL: /api
-
-Authentication:
-- POST /api/register
-  - body: { name, email, password, password_confirmation }
-  - response: user + token
-- POST /api/login
-  - body: { email, password }
-  - response: user + token
-- POST /api/logout
-  - header: Authorization: Bearer <token>
-
-Tasks (all routes require authentication):
-- GET /api/tasks
-  - params: page, per_page, status (pending|in_progress|done), q (search)
-  - returns: paginated tasks for authenticated user
-- POST /api/tasks
-  - body: { title, description, status }
-- GET /api/tasks/{id}
-- PUT /api/tasks/{id}
-  - body: { title?, description?, status? }
-- DELETE /api/tasks/{id}
-
-Example: create a task (curl)
-```bash
-curl -X POST http://localhost:8000/api/tasks \
-  -H "Authorization: Bearer <your_token>" \
-  -H "Content-Type: application/json" \
-  -d '{"title":"New Task","description":"Details","status":"pending"}'
-```
-
-Pagination example:
-- GET /api/tasks?page=1&per_page=10
-
-Search & filter:
-- GET /api/tasks?q=meeting&status=in_progress
-
-Notes:
-- The API returns standard HTTP status codes and JSON payloads.
-- Ensure CORS & Sanctum settings allow your frontend domain.
+## 📁 Project Structure
+task-management-app/
+ ├── backend/
+ ├── frontend/
+ ├── docker-compose.yml
+ └── README.md
 
 ---
 
-## Frontend routes & behavior
-Typical routes (subject to implementation):
-- / — Dashboard / Task list (paginated)
-- /login — Login page
-- /register — Registration page
-- /tasks/new — Create task
-- /tasks/:id — View / edit task
-
-Authentication:
-- On login, the frontend stores the token (either cookie or localStorage based on config) and attaches it to requests (Authorization header or withCredentials for cookies).
-- Protected routes redirect to /login when unauthenticated.
+## 🔒 Security
+- Sanctum authentication
+- Hashed passwords
+- Input validation
+- Protected APIs & routes
+- CORS configured
 
 ---
 
-## Testing
-Backend:
-- Run PHPUnit:
-```bash
-php artisan test
-# or
-vendor/bin/phpunit
-```
-
-Frontend:
-- Run the frontend test runner (if configured; e.g., Vitest or Jest):
-```bash
-npm run test
-```
-
-(Adjust commands to the test runner configured in the repo.)
+## 📱 Responsive Design
+- Mobile-first
+- Tailwind CSS breakpoints
+- Accessible components
 
 ---
 
-## Production / Deployment
-General steps:
-1. Build frontend for production
-   ```bash
-   npm run build
-   ```
-2. Serve built assets with a static server (Nginx) or let Laravel serve them from `public` (copy files).
-3. Configure the production `.env`:
-   - Set `APP_ENV=production`
-   - Configure DB to MySQL
-   - Set `APP_URL` and CORS/SANCTUM domains
-4. Run migrations:
-   ```bash
-   php artisan migrate --force
-   ```
-5. Use supervisor / systemd + php-fpm + nginx for the PHP app, or containerize with Docker for a consistent deployment.
+## 🚨 Error Handling
+### Frontend
+- Toast notifications
+- Form validation
+- API error handling
 
-Security notes:
-- Do not expose APP_KEY or JWT_SECRET publicly.
-- Use HTTPS in production and secure cookie settings (SameSite, Secure).
-- Set strong DB credentials and environment variable management.
+### Backend
+- Proper HTTP responses
+- Validation messages
+- Auth middleware
+- Model not found handlers
 
 ---
 
-## Troubleshooting & Tips
-- CORS: If the frontend cannot reach the backend, confirm that CORS is configured and the frontend origin is allowed.
-- Sanctum + SPA: When using cookie-based SPA auth, ensure both frontend and backend domains are properly configured in `SANCTUM_STATEFUL_DOMAINS` and session/cookie domains.
-- Migrations failing: delete `database/database.sqlite` and recreate, or ensure DB credentials are correct.
-- Docker permission issues: ensure volumes have correct ownership; you may need to run `chown` inside the container for storage and bootstrap/cache.
+## 📊 Database Schema
 
-Common commands summary:
-```bash
-# start (docker)
-docker compose up -d --build
+### Users
+- id, name, email, password, timestamps
 
-# artisan migrations & seed
-docker compose exec app php artisan migrate --seed --force
-
-# run backend locally
-php artisan serve
-
-# run frontend dev
-npm run dev
-
-# build frontend
-npm run build
-```
+### Tasks
+- id, user_id (FK), title, description, status, timestamps
 
 ---
 
-## Contributing
-Contributions are welcome! Please follow these steps:
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Commit changes: `git commit -m "Add my feature"`
-4. Push: `git push origin feature/my-feature`
-5. Open a pull request describing your changes
-
-Please open issues for bugs, feature requests, or questions.
+## 🔄 Development Workflow
+1. Clone repository
+2. Install dependencies
+3. Run the app
+4. Test
+5. Build & deploy
 
 ---
 
-## License
-This project is licensed under the MIT License — see the [LICENSE](https://opensource.org/licenses/MIT) for details.
+## 🐛 Troubleshooting
+- Ports in use → change ports or stop services
+- Database errors → check .env and migrations
+- CORS issues → verify Sanctum domains & frontend API URL
+- Docker issues → rebuild containers
 
 ---
 
