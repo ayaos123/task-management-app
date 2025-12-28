@@ -138,3 +138,249 @@ GET	/api/tasks	Get paginated tasks
 POST	/api/tasks	Create new task
 PUT	/api/tasks/{id}	Update task
 DELETE	/api/tasks/{id}	Delete task
+---
+API Examples
+Register User
+Request:
+
+POST /api/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+---
+Create Task
+Request:
+
+POST /api/tasks
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "title": "Complete project",
+  "description": "Finish the task management app",
+  "status": "pending"
+}
+---
+🎨 Frontend Features
+Pages
+Login Page - User authentication
+
+Register Page - New user registration
+
+Dashboard - Task management interface
+
+Components
+TaskList - Display tasks with pagination
+
+TaskForm - Create/update tasks
+
+TaskItem - Individual task display
+
+ProtectedRoute - Auth guard for routes
+
+State Management
+React Context for authentication
+
+Local state for form management
+
+API state handling (loading, error, success)
+---
+
+🐳 Docker Configuration
+Services
+backend - Laravel API on PHP 8.2
+
+frontend - React app on Node.js 18
+
+database - MySQL (production) / SQLite (development)
+
+Volumes
+Database persistence
+
+Application code hot-reload
+---
+
+🔧 Environment Variables
+Backend (.env)
+env
+APP_NAME="Task Management"
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=sqlite
+# OR for MySQL in production
+# DB_CONNECTION=mysql
+# DB_HOST=database
+# DB_PORT=3306
+# DB_DATABASE=taskdb
+# DB_USERNAME=root
+# DB_PASSWORD=secret
+
+SANCTUM_STATEFUL_DOMAINS=localhost:3000
+SESSION_DOMAIN=localhost
+Frontend (.env)
+env
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_NAME="Task Manager"
+---
+🧪 Testing
+Backend Tests
+bash
+docker-compose exec backend php artisan test
+# OR
+cd backend && php artisan test
+---
+Frontend Tests
+cd frontend && npm test
+---
+📁 Project Structure
+text
+task-management-app/
+├── backend/                    # Laravel API
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/   # API Controllers
+│   │   │   └── Middleware/
+│   │   ├── Models/            # Eloquent Models
+│   │   └── Policies/          # Authorization Policies
+│   ├── database/
+│   │   ├── migrations/        # Database migrations
+│   │   └── seeders/           # Data seeders
+│   ├── routes/
+│   │   └── api.php            # API routes
+│   └── tests/                 # PHPUnit tests
+│
+├── frontend/                  # React Application
+│   ├── src/
+│   │   ├── components/        # React components
+│   │   ├── contexts/          # React contexts
+│   │   ├── pages/             # Page components
+│   │   ├── services/          # API services
+│   │   └── utils/             # Utility functions
+│   └── public/                # Static assets
+│
+├── docker-compose.yml         # Docker orchestration
+└── README.md # This file
+---
+🔒 Security Features
+Authentication: Laravel Sanctum with JWT
+
+Authorization: User-specific task access
+
+Input Validation: Server-side validation
+
+Password Hashing: Bcrypt encryption
+
+CORS Protection: Configured for frontend domain
+
+CSRF Protection: Laravel built-in protection
+---
+
+📱 Responsive Design
+Mobile-first approach
+
+Tailwind CSS utility classes
+
+Breakpoints for all device sizes
+
+Accessible form controls
+---
+
+🚨 Error Handling
+Frontend
+Loading states with spinners
+
+Error messages with toast notifications
+
+Form validation errors
+
+Network error handling
+
+Backend
+HTTP status codes
+
+Validation error responses
+
+Authentication middleware
+
+Model not found exceptions
+---
+
+📊 Database Schema
+Users Table:
+id (primary key)
+
+name (string)
+
+email (string, unique)
+
+password (hashed)
+
+created_at, updated_at
+
+Tasks Table:
+id (primary key)
+
+user_id (foreign key)
+
+title (string)
+
+description (text, nullable)
+
+status (enum: pending, in_progress, done)
+
+created_at, updated_at
+---
+
+🔄 Development Workflow
+Setup: Clone repo and run docker-compose up
+
+Development: Code changes auto-refresh
+
+Testing: Run tests before commits
+
+Build: Production build with npm run build and composer install --optimize
+
+---
+🐛 Troubleshooting
+Common Issues:
+Port already in use:
+bash
+# Change ports in .env files
+# Or kill processes on ports 3000/8000
+Database connection errors:
+Check SQLite file permissions
+
+Verify database path in .env
+
+Run migrations: php artisan migrate
+
+CORS errors:
+Verify SANCTUM_STATEFUL_DOMAINS in .env
+
+Check frontend API URL configuration
+
+Docker issues:
+bash
+# Rebuild containers
+docker-compose down
+docker-compose build --no-cache
+docker-compose up
+---
+📝 Assumptions & Notes
+Development Focus: SQLite used for simplicity in development
+
+Authentication: JWT tokens stored in localStorage (for demo purposes)
+
+Security: In production, implement refresh tokens and secure storage
+
+Scalability: Current implementation suitable for small-medium applications
+
+UI/UX: Basic but functional interface; can be enhanced with more time
