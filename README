@@ -1,38 +1,305 @@
-# 🗂 Task Management Application
+# Task Management App
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
-[![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://reactjs.org/)  
-[![Laravel](https://img.shields.io/badge/Laravel-10-red?logo=laravel)](https://laravel.com/)  
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3-blue?logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](#docker)
+[![Built With Laravel + React](https://img.shields.io/badge/stack-Laravel%20%2B%20React-orange.svg)](#tech-stack)
 
-A full-stack **Task Management Application** built with **Laravel (backend)** and **React + TypeScript (frontend)**.  
-It supports user authentication, CRUD operations for tasks, and features a clean, responsive interface.
+A full-stack Task Management application with a Laravel API and a React + Vite frontend. Designed for quick local development (Docker-ready) and small-to-medium production deployments.
 
 ---
 
-## ✨ Features
+Table of contents
+- [Demo](#demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start (Docker)](#quick-start-docker)
+  - [Manual Setup](#manual-setup)
+- [Environment variables](#environment-variables)
+- [API Reference](#api-reference)
+- [Frontend](#frontend)
+- [Testing](#testing)
+- [Project Structure](#project-structure)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
 
-### ✅ Backend (Laravel)
-- User registration & login with email/password
-- JWT-based authentication using **Laravel Sanctum**
+---
+
+## Demo
+Add screenshots or a link to a live demo here.
+
+![screenshot](./frontend/public/screenshot.png) <!-- Replace with an actual screenshot -->
+
+---
+
+## Features
+
+- User registration & login (Laravel Sanctum)
+- JWT-based authentication (for API usage)
 - CRUD operations for tasks
-- Task status management (`pending`, `in_progress`, `done`)
-- User-specific task access control
-- RESTful API design
-- Input validation & error handling
+- Task statuses: `pending`, `in_progress`, `done`
+- User-scoped tasks (authorization)
+- Paginated task list (10 tasks per page)
+- React frontend with protected routes
+- Tailwind CSS responsive UI
+- Docker Compose for easy local development
 
-### ✅ Frontend (React + Vite + TypeScript)
-- Login & registration forms
-- Protected routes with authentication
-- Task list with pagination
-- Create, update, delete tasks
-- Status management with dropdown
-- Responsive design with **Tailwind CSS**
-- Loading & error states handling
-- Toast notifications
+---
 
-### 🚀 Bonus Features
-- Docker setup for easy deployment
-- Pagination (10 tasks per page)
-- Clean, professional UI
-- SQLite database for development
+## Tech Stack
+
+Backend
+- Laravel 10.x (PHP 8.1+)
+- Laravel Sanctum
+- SQLite (dev) / MySQL (prod)
+
+Frontend
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+- react-hot-toast
+
+Dev / Tools
+- Docker & Docker Compose
+- Git & GitHub
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Docker & Docker Compose (recommended)
+- Alternatively: PHP 8.1+, Composer, Node.js 18+, npm/yarn
+
+### Quick Start (Docker - recommended)
+1. Clone the repo
+   ```bash
+   git clone https://github.com/ayaos123/task-management-app.git
+   cd task-management-app
+   ```
+2. Copy environment files
+   ```bash
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   ```
+3. Start services
+   ```bash
+   docker-compose up -d
+   ```
+4. Backend setup
+   ```bash
+   docker-compose exec backend composer install
+   docker-compose exec backend php artisan key:generate
+   docker-compose exec backend php artisan migrate --seed
+   ```
+5. Frontend setup (if needed inside container)
+   ```bash
+   docker-compose exec frontend npm install
+   ```
+6. Access the app
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000/api
+
+Stop:
+```bash
+docker-compose down
+```
+
+### Manual Setup (without Docker)
+
+Backend
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# Use SQLite for local development:
+touch database/database.sqlite
+# Update .env:
+# DB_CONNECTION=sqlite
+# DB_DATABASE=/absolute/path/to/database/database.sqlite
+
+php artisan migrate --seed
+php artisan serve --port=8000
+```
+
+Frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+---
+
+## Environment variables
+
+Backend (.env)
+```
+APP_NAME="Task Management"
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=sqlite
+# For MySQL:
+# DB_CONNECTION=mysql
+# DB_HOST=database
+# DB_PORT=3306
+# DB_DATABASE=taskdb
+# DB_USERNAME=root
+# DB_PASSWORD=secret
+
+SANCTUM_STATEFUL_DOMAINS=localhost:5173
+SESSION_DOMAIN=localhost
+```
+
+Frontend (.env)
+```
+VITE_API_URL=http://localhost:8000/api
+VITE_APP_NAME="Task Manager"
+```
+
+---
+
+## API Reference
+
+Authentication
+- POST /api/register — register new user
+- POST /api/login — login (returns token)
+- POST /api/logout — logout
+- GET /api/user — get authenticated user
+
+Tasks (protected; require Authorization header)
+- GET /api/tasks — get paginated tasks (10 per page)
+- POST /api/tasks — create a task
+- PUT /api/tasks/{id} — update a task
+- DELETE /api/tasks/{id} — delete a task
+
+Example: Register
+```http
+POST /api/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123",
+  "password_confirmation": "password123"
+}
+```
+
+Example: Create task
+```http
+POST /api/tasks
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Complete project",
+  "description": "Finish the task management app",
+  "status": "pending"
+}
+```
+
+---
+
+## Frontend
+
+Pages
+- Login
+- Register
+- Dashboard (task list with pagination)
+- TaskCreate / TaskEdit
+
+Key components
+- TaskList — paginated list and search
+- TaskItem — task card with status dropdown
+- TaskForm — create / edit task
+- ProtectedRoute — auth guard
+
+State management
+- React Context for auth
+- Local component state for forms + Axios for API calls
+
+---
+
+## Testing
+
+Backend
+```bash
+# With Docker
+docker-compose exec backend php artisan test
+
+# Or local
+cd backend && php artisan test
+```
+
+Frontend
+```bash
+cd frontend
+npm test
+```
+
+---
+
+## Project structure
+```
+task-management-app/
+├── backend/         # Laravel API
+│   ├── app/
+│   ├── database/
+│   └── routes/
+├── frontend/        # React + Vite app
+│   ├── src/
+│   └── public/
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## Troubleshooting
+
+- Port conflicts: change ports in docker-compose or kill processes using ports 5173 / 8000
+- DB/SQLite permission issues: ensure `database/database.sqlite` exists and is writable
+- CORS / Sanctum issues: confirm `SANCTUM_STATEFUL_DOMAINS` and `VITE_API_URL` are correct
+- Docker rebuild:
+  ```bash
+  docker-compose down
+  docker-compose build --no-cache
+  docker-compose up -d
+  ```
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feat/my-feature`
+3. Make changes & tests
+4. Open a pull request describing the change
+
+Please follow conventional commits and write tests for new features where applicable.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+---
+
+If you'd like, I can:
+- Create this README.md file in the repo for you
+- Add example GitHub Actions workflow and badges
+- Improve the repo root README with screenshots/animated GIFs and more polished badges
+
+Tell me which of the above you'd like me to do next.
