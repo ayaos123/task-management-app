@@ -384,3 +384,4 @@ Security: In production, implement refresh tokens and secure storage
 Scalability: Current implementation suitable for small-medium applications
 
 UI/UX: Basic but functional interface; can be enhanced with more time
+
