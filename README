@@ -1,93 +1,71 @@
-Task Management Application
-Overview
-A full-stack task management application built with Laravel (backend) and React (frontend). Features user authentication, CRUD operations for tasks, and a clean, responsive interface.
+# Task Management Application  
 
-🚀 Features
-Backend (Laravel)
-✅ User registration & login with email/password
+## 📋 Overview  
+A full-stack task management application built with **Laravel (backend)** and **React (frontend)**. It features user authentication, CRUD operations for tasks, and a clean, responsive interface.  
 
-✅ JWT-based authentication using Laravel Sanctum
+---
 
-✅ CRUD operations for tasks
+## ✨ Features  
 
-✅ Task status management (pending, in_progress, done)
+### ✅ Backend (Laravel)  
+- User registration & login with email/password  
+- JWT-based authentication using Laravel Sanctum  
+- CRUD operations for tasks  
+- Task status management (pending, in_progress, done)  
+- User-specific task access control  
+- RESTful API design  
+- Input validation & error handling  
 
-✅ User-specific task access control
+### ✅ Frontend (React + Vite + TypeScript)  
+- Login & registration forms  
+- Protected routes with authentication  
+- Task list with pagination  
+- Create, update, delete tasks  
+- Status management with dropdown  
+- Responsive design with Tailwind CSS  
+- Loading & error states handling  
+- Toast notifications  
 
-✅ RESTful API design
+### ✅ Bonus Features  
+- Docker setup for easy deployment  
+- Pagination (10 tasks per page)  
+- Protected frontend routes  
+- Clean, professional UI  
+- SQLite database for development  
 
-✅ Input validation & error handling
+---
 
-Frontend (React + Vite + TypeScript)
-✅ Login & registration forms
+## 🛠️ Tech Stack  
 
-✅ Protected routes with authentication
+### Backend  
+- **Laravel 10.x** (PHP 8.1+)  
+- **Laravel Sanctum** for authentication  
+- **SQLite** (development) / **MySQL** (production)  
+- RESTful API design  
 
-✅ Task list with pagination
+### Frontend  
+- **React 18** with TypeScript  
+- **Vite** build tool  
+- **Tailwind CSS** for styling  
+- **React Router DOM** for routing  
+- **Axios** for API calls  
+- **React Hot Toast** for notifications  
 
-✅ Create, update, delete tasks
+---
 
-✅ Status management with dropdown
+## 🚀 Quick Start with Docker (Recommended)  
 
-✅ Responsive design with Tailwind CSS
-
-✅ Loading & error states handling
-
-✅ Toast notifications
-
-Bonus Features
-✅ Docker setup for easy deployment
-
-✅ Pagination (10 tasks per page)
-
-✅ Protected frontend routes
-
-✅ Clean, professional UI
-
-✅ SQLite database for development
-
-🛠️ Tech Stack
-Backend:
-
-Laravel 10.x (PHP 8.1+)
-
-Laravel Sanctum for authentication
-
-SQLite (development) / MySQL (production)
-
-RESTful API design
-
-Frontend:
-
-React 18 with TypeScript
-
-Vite build tool
-
-Tailwind CSS for styling
-
-React Router DOM for routing
-
-Axios for API calls
-
-React Hot Toast for notifications
-
-📋 Prerequisites
-Docker & Docker Compose OR
-
-PHP 8.1+, Composer, Node.js 18+, SQLite
-
-🐳 Quick Start with Docker (Recommended)
-1. Clone and Setup
-
+### 1. Clone and Setup  
+```bash
 # Clone the repository
 git clone <your-repo-url>
 cd task-management-app
 
 # Copy environment files
 cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
+cprontend/.env.example frontend/.env
+---
 2. Start with Docker Compose
-
 # Start all services
 docker-compose up -d
 
@@ -95,19 +73,17 @@ docker-compose up -d
 docker-compose exec backend composer install
 docker-compose exec backend php artisan key:generate
 docker-compose exec backend php artisan migrate
+---
 3. Access the Application
-Frontend: http://localhost:5173 || http://localhost:5174 || http://localhost:3000
 
+Frontend: http://localhost:5173
 Backend API: http://localhost:8000
-
-API Documentation: http://localhost:8000/api/documentation
-
+---
 4. Stop the Application
-
 docker-compose down
-🖥️ Manual Installation
+---
+Manual Installation
 Backend Setup
-
 # Navigate to backend
 cd backend
 
@@ -130,13 +106,10 @@ touch database/database.sqlite
 # Run migrations
 php artisan migrate
 
-# Generate JWT secret
-php artisan jwt:secret
-
 # Start development server
 php artisan serve --port=8000
+---
 Frontend Setup
-
 # Navigate to frontend
 cd frontend
 
@@ -148,274 +121,20 @@ cp .env.example .env
 
 # Start development server
 npm run dev
+---
 📡 API Endpoints
 Authentication
+
 Method	Endpoint	Description
 POST	/api/register	Register new user
 POST	/api/login	Login user
 POST	/api/logout	Logout user
 GET	/api/user	Get authenticated user
+
 Tasks (Protected)
+
 Method	Endpoint	Description
 GET	/api/tasks	Get paginated tasks
 POST	/api/tasks	Create new task
 PUT	/api/tasks/{id}	Update task
 DELETE	/api/tasks/{id}	Delete task
-Request/Response Examples
-Register User:
-
-json
-POST /api/register
-{
-    "name": "John Doe",
-    "email": "john@example.com",
-    "password": "password123",
-    "password_confirmation": "password123"
-}
-Create Task:
-
-json
-POST /api/tasks
-{
-    "title": "Complete project",
-    "description": "Finish the task management app",
-    "status": "pending"
-}
-🎨 Frontend Features
-Pages
-Login Page - User authentication
-
-Register Page - New user registration
-
-Dashboard - Task management interface
-
-Components
-TaskList - Display tasks with pagination
-
-TaskForm - Create/update tasks
-
-TaskItem - Individual task display
-
-ProtectedRoute - Auth guard for routes
-
-State Management
-React Context for authentication
-
-Local state for form management
-
-API state handling (loading, error, success)
-
-🐳 Docker Configuration
-Services
-backend - Laravel API on PHP 8.2
-
-frontend - React app on Node.js 18
-
-database - MySQL (production) / SQLite (development)
-
-Volumes
-Database persistence
-
-Application code hot-reload
-
-🔧 Environment Variables
-Backend (.env)
-env
-APP_NAME="Task Management"
-APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
-APP_URL=http://localhost:8000
-
-DB_CONNECTION=sqlite
-# OR for MySQL in production
-# DB_CONNECTION=mysql
-# DB_HOST=database
-# DB_PORT=3306
-# DB_DATABASE=taskdb
-# DB_USERNAME=root
-# DB_PASSWORD=secret
-
-SANCTUM_STATEFUL_DOMAINS=localhost:3000
-SESSION_DOMAIN=localhost
-Frontend (.env)
-env
-VITE_API_URL=http://localhost:8000/api
-VITE_APP_NAME="Task Manager"
-🧪 Testing
-Backend Tests
-
-docker-compose exec backend php artisan test
-# OR
-cd backend && php artisan test
-Frontend Tests
-
-cd frontend && npm test
-📁 Project Structure
-text
-task-management-app/
-├── backend/                    # Laravel API
-│   ├── app/
-│   │   ├── Http/
-│   │   │   ├── Controllers/   # API Controllers
-│   │   │   └── Middleware/
-│   │   ├── Models/            # Eloquent Models
-│   │   └── Policies/          # Authorization Policies
-│   ├── database/
-│   │   ├── migrations/        # Database migrations
-│   │   └── seeders/           # Data seeders
-│   ├── routes/
-│   │   └── api.php            # API routes
-│   └── tests/                 # PHPUnit tests
-│
-├── frontend/                  # React Application
-│   ├── src/
-│   │   ├── components/        # React components
-│   │   ├── contexts/          # React contexts
-│   │   ├── pages/             # Page components
-│   │   ├── services/          # API services
-│   │   └── utils/             # Utility functions
-│   └── public/                # Static assets
-│
-├── docker-compose.yml         # Docker orchestration
-└── README.md                  # This file
-🔒 Security Features
-Authentication: Laravel Sanctum with JWT
-
-Authorization: User-specific task access
-
-Input Validation: Server-side validation
-
-Password Hashing: Bcrypt encryption
-
-CORS Protection: Configured for frontend domain
-
-CSRF Protection: Laravel built-in protection
-
-📱 Responsive Design
-Mobile-first approach
-
-Tailwind CSS utility classes
-
-Breakpoints for all device sizes
-
-Accessible form controls
-
-🚨 Error Handling
-Frontend
-Loading states with spinners
-
-Error messages with toast notifications
-
-Form validation errors
-
-Network error handling
-
-Backend
-HTTP status codes
-
-Validation error responses
-
-Authentication middleware
-
-Model not found exceptions
-
-📊 Database Schema
-Users Table:
-
-id (primary key)
-
-name (string)
-
-email (string, unique)
-
-password (hashed)
-
-created_at, updated_at
-
-Tasks Table:
-
-id (primary key)
-
-user_id (foreign key)
-
-title (string)
-
-description (text, nullable)
-
-status (enum: pending, in_progress, done)
-
-created_at, updated_at
-
-🔄 Development Workflow
-Setup: Clone repo and run docker-compose up
-
-Development: Code changes auto-refresh
-
-Testing: Run tests before commits
-
-Build: Production build with npm run build and composer install --optimize
-
-Deploy: Push to production server
-
-🌐 Deployment
-Backend (Laravel)
-
-# Optimize for production
-composer install --optimize-autoloader --no-dev
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Set proper permissions
-chmod -R 775 storage bootstrap/cache
-
-# Environment setup
-cp .env.production .env
-# Configure production values
-Frontend (React)
-
-# Build for production
-npm run build
-
-# Serve with Nginx/Apache
-# Configure reverse proxy to API
-🐛 Troubleshooting
-Common Issues:
-Port already in use:
-
-
-# Change ports in .env files
-# Or kill processes on ports 3000/8000
-Database connection errors:
-
-Check SQLite file permissions
-
-Verify database path in .env
-
-Run migrations: php artisan migrate
-
-CORS errors:
-
-Verify SANCTUM_STATEFUL_DOMAINS in .env
-
-Check frontend API URL configuration
-
-Docker issues:
-
-
-# Rebuild containers
-docker-compose down
-docker-compose build --no-cache
-docker-compose up
-📝 Assumptions & Notes
-Development Focus: SQLite used for simplicity in development
-
-Authentication: JWT tokens stored in localStorage (for demo purposes)
-
-Security: In production, implement refresh tokens and secure storage
-
-Scalability: Current implementation suitable for small-medium applications
-
-UI/UX: Basic but functional interface; can be enhanced with more time
-
